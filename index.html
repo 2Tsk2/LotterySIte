@@ -14,7 +14,7 @@
       <button onclick="checkNumbers()" class="button-submit">Check</button>
       <button onclick="clearForm()" class="button-submit">Try again?</button>
     </div>
-    <p id="test" class="output">Enter six numbers (1-46) separated by commas</p>
+    <p id="test" class="output">Enter six numbers in the range of 1-46 and separated the numbers by commas</p>
     <p id="output" class="output"></p>
   </body>
   <script>
@@ -29,7 +29,7 @@
       const numbers = input.split(",").map(Number);
       if (!inputPattern.test(input)) {
         outputEl.textContent =
-          "Invalid input. Please enter six numbers between 1 and 46 separated by commas.";
+          "Please enter a valid input, read the instructions carefully";
         return;
       }
       const allNumbers = Array.from({ length: 46 }, (_, i) => i + 1);
