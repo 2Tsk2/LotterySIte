@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Lottery Checker</h1>
+    <input type="text" id="input" />
+    <div>
+      <button onclick="checkNumbers()" class="button-submit">Check</button>
+      <button onclick="clearForm()" class="button-submit">Try again?</button>
+    </div>
+    <p id="test" class="output">Enter six numbers (1-46) separated by commas</p>
+    <p id="output" class="output"></p>
+  </body>
+  <script>
+
+    const inputEl = document.getElementById("input");
+    const outputEl = document.getElementById("output");
+    const inputPattern =
+    /^([1-9]|[1-3]\d|4[0-6])(,[1-9]|[1-3]\d|4[0-6]){5}$/;
+
+    function checkNumbers() {
+      const input = inputEl.value;
+      const numbers = input.split(",").map(Number);
+      if (!inputPattern.test(input)) {
+        outputEl.textContent =
+          "Invalid input. Please enter six numbers between 1 and 46 separated by commas.";
+        return;
+      }
+      const allNumbers = Array.from({ length: 46 }, (_, i) => i + 1);
+      for (let i = allNumbers.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allNumbers[i], allNumbers[j]] = [allNumbers[j], allNumbers[i]];
+      }
+      const winningNumbers = allNumbers.slice(0, 6);
+      let correctNumbers = 0;
+      for (const number of numbers) {
+        if (winningNumbers.includes(number)) {
+          correctNumbers++;
+        }
+      }
+      outputEl.textContent = `Winning numbers: ${winningNumbers.join(
+        ", "
+      )}. You got ${correctNumbers} correct number(s).`;
+    }
+
+    function clearForm() {
+      inputEl.value = "";
+      outputEl.textContent = "";
+    }
+  </script>
+</html>
